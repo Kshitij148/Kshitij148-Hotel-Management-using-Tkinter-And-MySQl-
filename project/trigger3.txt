@@ -1,0 +1,24 @@
+use hotel;
+delimiter $$
+drop trigger if exists t3 $$
+create trigger t3 before insert on room_service
+for each row
+begin
+
+
+
+
+if new.rn is null or new.rn<=0 then
+	signal SQLSTATE '21111'
+		set message_text='Invalid Room Number ';
+
+end if;
+
+if new.gname is null or length(new.gname)<2 then
+	signal SQLSTATE '21112'
+		set message_text='Invalid Registered Name';
+
+end if;
+
+end $$
+delimiter ;

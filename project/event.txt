@@ -1,0 +1,9 @@
+delimiter $$
+create  event e1
+on schedule every 1 day
+starts '2020-08-04 23:59:00'
+do
+begin
+call pr1();
+end $$
+delimiter ;

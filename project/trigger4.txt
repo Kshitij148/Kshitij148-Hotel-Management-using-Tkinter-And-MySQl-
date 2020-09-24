@@ -1,0 +1,31 @@
+use hotel;
+delimiter $$
+drop trigger if exists t4 $$
+create trigger t4 before insert on game_zone
+for each row
+begin
+
+if new.rn is null or new.rn<=0 then
+	signal SQLSTATE '31111'
+		set message_text='Invalid Room Number ';
+
+end if;
+
+if new.gname is null or length(new.gname)<2 then
+	signal SQLSTATE '31112'
+		set message_text='Invalid Registered Name';
+end if;
+
+if new.count is null or new.count<=0 then
+	signal SQLSTATE '31113'
+		set message_text='Invalid Count';
+end if;
+
+if new.time is null or new.time<=0 then
+	signal SQLSTATE '31114'
+		set message_text='Invalid Hours';
+
+end if;
+
+end $$
+delimiter ;

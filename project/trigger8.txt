@@ -1,0 +1,22 @@
+use hotel;
+delimiter $$
+drop trigger if exists t8$$
+create trigger t8 before update on employee_details
+for each row
+begin
+
+
+if new.duty is null then
+	signal SQLSTATE '81112'
+		set message_text='Invalid Duty Assigned';
+end if;
+
+if new.salary is null then
+	signal SQLSTATE '81113'
+		set message_text='Invalid Salary';
+end if;
+
+
+end $$
+
+delimiter ;

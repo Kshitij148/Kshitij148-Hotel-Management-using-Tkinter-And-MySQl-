@@ -1,0 +1,25 @@
+delimiter $$
+drop procedure if exists pr1$$
+create procedure pr1()
+begin
+declare n bigint default 0;
+declare r int default 0;
+declare c1 cursor for select guest_id,room_no from book_details t1 left join cust_details t2 on t1.guest_id=t2.c_no where t2.c_no is null;
+open c1;
+	begin
+		declare exit handler for 1329 begin end;
+		loop
+			fetch c1 into n,r;
+			select r as msg;
+			delete from book_details where guest_id=n;
+			update rooms set Availability="Vacant" where room_no=r;
+			
+			
+		end loop;
+	end;
+close c1;
+
+end$$
+
+delimiter ;
+			  

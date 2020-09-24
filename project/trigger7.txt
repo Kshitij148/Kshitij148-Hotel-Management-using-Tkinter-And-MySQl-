@@ -1,0 +1,41 @@
+use hotel;
+delimiter $$
+drop trigger if exists t7 $$
+create trigger t7 before update on cust_details
+for each row
+begin
+
+
+
+
+
+
+
+if new.phone_no is null or length(new.phone_no)!=10 then
+	signal SQLSTATE '11114'
+		set message_text="Invalid Phone Number";
+end if;
+
+if new.no_children is null or new.no_adults is null or new.no_adults<0 or new.no_children <0  then
+	signal SQLSTATE '11115'
+		set message_text="Invalid Count";
+end if;
+
+
+if new.occupation is null or length(new.occupation)<1 then
+	signal SQLSTATE '11117'
+		set message_text="Invalid Occupation";
+end if;
+
+if new.Adharcard_no is null or length(new.Adharcard_no)<12 or length(new.Adharcard_no)>12 then
+	signal SQLSTATE '11118'
+		set message_text="Invalid Adharcard Number";
+end if;
+
+
+
+
+end $$
+delimiter ;
+
+
